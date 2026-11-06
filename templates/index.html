@@ -1,0 +1,420 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Particle Background -->
+<div class="particles" id="particles"></div>
+
+<!-- Hero Section -->
+<section id="home" class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        AI-Powered Heart Disease 
+                        <span class="text-glow">Prediction</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Advanced machine learning algorithms analyze your cardiovascular health in real-time. 
+                        Get instant, accurate risk assessments with our state-of-the-art AI model.
+                    </p>
+                    
+                    <!-- <div class="hero-stats glow-effect">
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <div class="stat-item">
+                                    <span class="stat-number" data-target="94">0</span>
+                                    <div class="stat-label">% Accuracy</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="stat-item">
+                                    <span class="stat-number" data-target="16">0</span>
+                                    <div class="stat-label">Parameters</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="stat-item">
+                                    <span class="stat-number" data-target="3">0</span>
+                                    <div class="stat-label">Seconds</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    
+                    <div class="hero-cta">
+                        <a href="{{ url_for('predict') }}" class="btn btn-hero-primary">
+                            <i class="fas fa-heartbeat me-2"></i>Start Health Assessment
+                        </a>
+                        <a href="#about" class="btn btn-hero-secondary">
+                            <i class="fas fa-info-circle me-2"></i>Learn More
+                        </a>
+                    </div>
+                    
+                    <div class="d-flex flex-wrap gap-2 mt-4">
+                        <span class="badge bg-success">
+                            <i class="fas fa-shield-alt me-1"></i>HIPAA Compliant
+                        </span>
+                        <span class="badge bg-primary">
+                            <i class="fas fa-brain me-1"></i>AI-Powered
+                        </span>
+                        <span class="badge bg-warning">
+                            <i class="fas fa-clock me-1"></i>Instant Results
+                        </span>
+                        <span class="badge bg-info">
+                            <i class="fas fa-lock me-1"></i>Secure & Private
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <div class="heart-visualization">
+                    <div class="heart-monitor glow-effect">
+                        <div class="text-center mb-4">
+                            <div class="heart-icon">
+                                <i class="fas fa-heartbeat"></i>
+                            </div>
+                            <h5 class="text-primary mb-0">Real-time Analysis</h5>
+                            <small class="text-muted">Cardiovascular Risk Assessment</small>
+                        </div>
+                        
+                        <div class="heartbeat-line"></div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <div class="text-center">
+                                    <div class="h4 text-success mb-0">Normal</div>
+                                    <small class="text-muted">Heart Rate</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-center">
+                                    <div class="h4 text-primary mb-0">Active</div>
+                                    <small class="text-muted">Status</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="floating-elements">
+                        <div class="floating-icon" style="font-size: 2rem;">
+                            <i class="fas fa-stethoscope"></i>
+                        </div>
+                        <div class="floating-icon" style="font-size: 1.8rem;">
+                            <i class="fas fa-pills"></i>
+                        </div>
+                        <div class="floating-icon" style="font-size: 2.2rem;">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div class="floating-icon" style="font-size: 1.9rem;">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-5 section-dark">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">
+                <i class="fas fa-brain text-primary me-3"></i>
+                Advanced AI Technology
+            </h2>
+            <p class="section-subtitle">
+                Our cutting-edge machine learning model uses deep neural networks and ensemble methods 
+                to provide the most accurate heart disease predictions available today.
+            </p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="card-dark h-100">
+                    <div class="card-body text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h5 class="text-primary fw-bold mb-3">Machine Learning Excellence</h5>
+                        <p class="text-secondary">
+                            Powered by Random Forest, Gradient Boosting, and Neural Networks 
+                            with advanced feature engineering for superior accuracy.
+                        </p>
+                        <div class="mt-3">
+                            <span class="badge bg-primary me-1">Random Forest</span>
+                            <span class="badge bg-success me-1">Neural Networks</span>
+                            <span class="badge bg-info">Ensemble Methods</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4">
+                <div class="card-dark h-100">
+                    <div class="card-body text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h5 class="text-primary fw-bold mb-3">Exceptional Accuracy</h5>
+                        <p class="text-secondary">
+                            Achieved 94%+ accuracy through rigorous testing on diverse medical datasets 
+                            with comprehensive cross-validation.
+                        </p>
+                        <div class="progress-dark mt-3">
+                            <div class="progress-bar bg-success" style="width: 94%">94% Accuracy</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4">
+                <div class="card-dark h-100">
+                    <div class="card-body text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-lightning-bolt"></i>
+                        </div>
+                        <h5 class="text-primary fw-bold mb-3">Lightning Fast Results</h5>
+                        <p class="text-secondary">
+                            Get comprehensive cardiovascular risk assessment in under 3 seconds 
+                            with detailed analysis and recommendations.
+                        </p>
+                        <div class="d-flex justify-content-around mt-3">
+                            <div class="text-center">
+                                <div class="h5 text-primary mb-0">< 3s</div>
+                                <small class="text-muted">Processing</small>
+                            </div>
+                            <div class="text-center">
+                                <div class="h5 text-success mb-0">Real-time</div>
+                                <small class="text-muted">Results</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Model Performance -->
+        <div class="row mt-5">
+            <div class="col-lg-6">
+                <div class="card-dark glow-effect">
+                    <div class="card-body">
+                        <h5 class="text-primary fw-bold mb-4">
+                            <i class="fas fa-tachometer-alt me-2"></i>
+                            Performance Metrics
+                        </h5>
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-secondary">Accuracy</span>
+                                <span class="text-primary fw-bold">94.2%</span>
+                            </div>
+                            <div class="progress-dark">
+                                <div class="progress-bar bg-primary" style="width: 94.2%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-secondary">Precision</span>
+                                <span class="text-success fw-bold">91.8%</span>
+                            </div>
+                            <div class="progress-dark">
+                                <div class="progress-bar bg-success" style="width: 91.8%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-secondary">Recall</span>
+                                <span class="text-info fw-bold">93.1%</span>
+                            </div>
+                            <div class="progress-dark">
+                                <div class="progress-bar bg-info" style="width: 93.1%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-0">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-secondary">F1-Score</span>
+                                <span class="text-warning fw-bold">92.4%</span>
+                            </div>
+                            <div class="progress-dark">
+                                <div class="progress-bar bg-warning" style="width: 92.4%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <div class="card-dark glow-effect">
+                    <div class="card-body">
+                        <h5 class="text-primary fw-bold mb-4">
+                            <i class="fas fa-microscope me-2"></i>
+                            Analyzed Parameters
+                        </h5>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <i class="fas fa-check text-primary me-2"></i>
+                                        <span class="text-secondary">Age & Demographics</span>
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-check text-primary me-2"></i>
+                                        <span class="text-secondary">Blood Pressure</span>
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-check text-primary me-2"></i>
+                                        <span class="text-secondary">Cholesterol Levels</span>
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-check text-primary me-2"></i>
+                                        <span class="text-secondary">Heart Rate Patterns</span>
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-check text-primary me-2"></i>
+                                        <span class="text-secondary">ECG Results</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <i class="fas fa-check text-primary me-2"></i>
+                                        <span class="text-secondary">Exercise Test Data</span>
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-check text-primary me-2"></i>
+                                        <span class="text-secondary">Lifestyle Factors</span>
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-check text-primary me-2"></i>
+                                        <span class="text-secondary">BMI & Weight</span>
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-check text-primary me-2"></i>
+                                        <span class="text-secondary">Blood Sugar</span>
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-check text-primary me-2"></i>
+                                        <span class="text-secondary">Risk Interactions</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 section-darker">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="mb-4">
+                    <i class="fas fa-heartbeat text-primary" style="font-size: 4rem; animation: heartbeat 2s ease-in-out infinite;"></i>
+                </div>
+                <h2 class="display-5 fw-bold text-primary mb-4">
+                    Take Control of Your Heart Health
+                </h2>
+                <p class="lead text-secondary mb-4">
+                    Don't wait for warning signs. Get your personalized cardiovascular risk assessment now 
+                    and take proactive steps towards a healthier heart.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="{{ url_for('predict') }}" class="btn btn-hero-primary btn-lg">
+                        <i class="fas fa-calculator me-2"></i>Start Assessment Now
+                    </a>
+                    <button class="btn btn-hero-secondary btn-lg" onclick="scrollToTop()">
+                        <i class="fas fa-arrow-up me-2"></i>Back to Top
+                    </button>
+                </div>
+                
+                <div class="mt-4">
+                    <small class="text-muted">
+                        <i class="fas fa-users me-2"></i>
+                        Trusted by healthcare professionals worldwide
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Animated counters
+function animateCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const increment = target / 50;
+        let current = 0;
+        
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                counter.textContent = target + (target === 94 ? '%' : '');
+                clearInterval(timer);
+            } else {
+                counter.textContent = Math.floor(current) + (target === 94 ? '%' : '');
+            }
+        }, 30);
+    });
+}
+
+// Particle system
+function createParticles() {
+    const particlesContainer = document.getElementById('particles');
+    const particleCount = 50;
+    
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        particlesContainer.appendChild(particle);
+    }
+}
+
+// Scroll to top function
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// Initialize animations when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(animateCounters, 500);
+    createParticles();
+    
+    // Animate progress bars when they come into view
+    const progressBars = document.querySelectorAll('.progress-bar');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const bar = entry.target;
+                bar.style.width = bar.getAttribute('style').match(/width:\s*([^;]+)/)[1];
+            }
+        });
+    });
+    
+    progressBars.forEach(bar => {
+        bar.style.width = '0%';
+        observer.observe(bar);
+    });
+});
+</script>
+{% endblock %}

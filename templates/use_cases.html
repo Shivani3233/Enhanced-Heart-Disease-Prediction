@@ -1,0 +1,396 @@
+{% extends "base.html" %}
+
+{% block title %}Use Cases - CardioPredict AI{% endblock %}
+
+{% block content %}
+<!-- Particle Background -->
+<div class="particles" id="particles"></div>
+
+<!-- Hero Banner -->
+<section class="algo-hero-section">
+    <div class="container">
+        <div class="text-center">
+            <div class="algo-hero-icon">
+                <i class="fas fa-hospital"></i>
+            </div>
+            <h1 class="hero-title" style="font-size: 3.2rem;">
+                Real-World <span class="text-glow">Use Cases</span>
+            </h1>
+            <p class="hero-subtitle mx-auto">
+                From clinical screening to public health analytics — discover how CardioPredict's 
+                advanced ML pipeline transforms cardiovascular healthcare.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Primary Use Cases -->
+<section class="py-5 section-dark">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">
+                <i class="fas fa-stethoscope text-primary me-3"></i>Clinical Applications
+            </h2>
+        </div>
+
+        <div class="row g-4">
+            <!-- Use Case 1 -->
+            <div class="col-lg-6">
+                <div class="usecase-card h-100">
+                    <div class="usecase-header" style="background: linear-gradient(135deg, rgba(231,76,60,0.15), rgba(192,57,43,0.05));">
+                        <div class="usecase-icon" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <h4>Primary Care Screening</h4>
+                    </div>
+                    <div class="usecase-body">
+                        <p>
+                            General practitioners can use CardioPredict during routine check-ups to 
+                            instantly stratify patients into risk tiers. The calibrated probability output 
+                            helps doctors decide whether to order further cardiac investigations.
+                        </p>
+                        <div class="usecase-benefits">
+                            <h6><i class="fas fa-check-circle text-success me-2"></i>Key Benefits</h6>
+                            <ul>
+                                <li>Reduces unnecessary specialist referrals by 30-40%</li>
+                                <li>Catches high-risk patients who may otherwise be missed</li>
+                                <li>Cost-sensitive learning ensures minimal missed diagnoses</li>
+                                <li>Results in under 3 seconds during the consultation</li>
+                            </ul>
+                        </div>
+                        <div class="usecase-algo-used">
+                            <small class="text-muted">Algorithms at work:</small>
+                            <div class="mt-2">
+                                <span class="algo-tag-sm">Probability Calibration</span>
+                                <span class="algo-tag-sm">Threshold Optimization</span>
+                                <span class="algo-tag-sm">Cost-Sensitive Learning</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Use Case 2 -->
+            <div class="col-lg-6">
+                <div class="usecase-card h-100">
+                    <div class="usecase-header" style="background: linear-gradient(135deg, rgba(52,152,219,0.15), rgba(41,128,185,0.05));">
+                        <div class="usecase-icon" style="background: linear-gradient(135deg, #3498db, #2980b9);">
+                            <i class="fas fa-hospital-alt"></i>
+                        </div>
+                        <h4>Emergency Department Triage</h4>
+                    </div>
+                    <div class="usecase-body">
+                        <p>
+                            In busy emergency departments, CardioPredict provides rapid cardiac risk scoring 
+                            from vital signs and lab results. The Youden's J optimized threshold ensures 
+                            maximum sensitivity — prioritizing not missing any true cardiac events.
+                        </p>
+                        <div class="usecase-benefits">
+                            <h6><i class="fas fa-check-circle text-success me-2"></i>Key Benefits</h6>
+                            <ul>
+                                <li>Instant triage support within the critical first minutes</li>
+                                <li>High sensitivity threshold minimizes missed cardiac events</li>
+                                <li>Complements clinical judgment with data-driven scoring</li>
+                                <li>Works even with partial clinical data (graceful degradation)</li>
+                            </ul>
+                        </div>
+                        <div class="usecase-algo-used">
+                            <small class="text-muted">Algorithms at work:</small>
+                            <div class="mt-2">
+                                <span class="algo-tag-sm">Threshold Optimization</span>
+                                <span class="algo-tag-sm">EasyEnsemble</span>
+                                <span class="algo-tag-sm">Soft Voting</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Use Case 3 -->
+            <div class="col-lg-6">
+                <div class="usecase-card h-100">
+                    <div class="usecase-header" style="background: linear-gradient(135deg, rgba(39,174,96,0.15), rgba(46,204,113,0.05));">
+                        <div class="usecase-icon" style="background: linear-gradient(135deg, #27ae60, #2ecc71);">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <h4>Cardiac Rehabilitation Monitoring</h4>
+                    </div>
+                    <div class="usecase-body">
+                        <p>
+                            Track patients' cardiovascular risk over time during rehabilitation programs. 
+                            The well-calibrated probabilities allow clinicians to objectively measure 
+                            improvement and adjust treatment intensity accordingly.
+                        </p>
+                        <div class="usecase-benefits">
+                            <h6><i class="fas fa-check-circle text-success me-2"></i>Key Benefits</h6>
+                            <ul>
+                                <li>Longitudinal tracking of risk reduction over weeks/months</li>
+                                <li>Calibrated probabilities enable meaningful before/after comparisons</li>
+                                <li>Supports evidence-based decisions on discharge timing</li>
+                                <li>Motivates patients by showing measurable improvement</li>
+                            </ul>
+                        </div>
+                        <div class="usecase-algo-used">
+                            <small class="text-muted">Algorithms at work:</small>
+                            <div class="mt-2">
+                                <span class="algo-tag-sm">Probability Calibration</span>
+                                <span class="algo-tag-sm">IWRF</span>
+                                <span class="algo-tag-sm">Feature Engineering</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Use Case 4 -->
+            <div class="col-lg-6">
+                <div class="usecase-card h-100">
+                    <div class="usecase-header" style="background: linear-gradient(135deg, rgba(155,89,182,0.15), rgba(142,68,173,0.05));">
+                        <div class="usecase-icon" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h4>Population Health Analytics</h4>
+                    </div>
+                    <div class="usecase-body">
+                        <p>
+                            Public health organizations can batch-process population datasets through 
+                            CardioPredict to identify high-risk cohorts, plan resource allocation, and 
+                            design targeted screening campaigns with maximum cost-effectiveness.
+                        </p>
+                        <div class="usecase-benefits">
+                            <h6><i class="fas fa-check-circle text-success me-2"></i>Key Benefits</h6>
+                            <ul>
+                                <li>Identify at-risk demographics for targeted interventions</li>
+                                <li>BorutaSHAP reveals which risk factors dominate each population</li>
+                                <li>Cost-sensitive evaluation optimizes healthcare budget allocation</li>
+                                <li>API endpoint enables integration with existing EHR systems</li>
+                            </ul>
+                        </div>
+                        <div class="usecase-algo-used">
+                            <small class="text-muted">Algorithms at work:</small>
+                            <div class="mt-2">
+                                <span class="algo-tag-sm">BorutaSHAP</span>
+                                <span class="algo-tag-sm">mRMR</span>
+                                <span class="algo-tag-sm">Cost-Sensitive Learning</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Advanced Techniques Matter -->
+<section class="py-5 section-darker">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">
+                <i class="fas fa-award text-primary me-3"></i>Why These Techniques Matter
+            </h2>
+            <p class="section-subtitle">
+                Each algorithm was chosen to address a specific challenge in medical prediction.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="why-card">
+                    <div class="why-icon"><i class="fas fa-exclamation-triangle text-warning"></i></div>
+                    <h5>Class Imbalance</h5>
+                    <p>Heart disease datasets are often imbalanced. <strong>EasyEnsemble</strong> and <strong>IWRF</strong> with cost-sensitive weights ensure the minority class (disease) is not overwhelmed by healthy cases.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="why-card">
+                    <div class="why-icon"><i class="fas fa-search text-info"></i></div>
+                    <h5>Feature Noise</h5>
+                    <p>Not all 27 engineered features are equally useful. <strong>BorutaSHAP</strong> and <strong>mRMR</strong> eliminate noisy features, reducing overfitting while keeping all truly relevant signals.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="why-card">
+                    <div class="why-icon"><i class="fas fa-tachometer-alt text-success"></i></div>
+                    <h5>Hyperparameter Sensitivity</h5>
+                    <p>ML models are sensitive to hyperparameters. <strong>Bayesian Optimization</strong> finds optimal settings 5× faster than grid search with better final performance.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="why-card">
+                    <div class="why-icon"><i class="fas fa-handshake text-primary"></i></div>
+                    <h5>Clinical Trust</h5>
+                    <p>Doctors need probabilities they can trust. <strong>Probability Calibration</strong> ensures a 70% risk score truly corresponds to 70% ground truth — essential for informed consent.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="why-card">
+                    <div class="why-icon"><i class="fas fa-shield-alt text-danger"></i></div>
+                    <h5>Patient Safety</h5>
+                    <p>Missing a heart disease case is life-threatening. <strong>Cost-Sensitive Learning</strong> and <strong>Threshold Optimization</strong> prioritize sensitivity over specificity for safer screening.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="why-card">
+                    <div class="why-icon"><i class="fas fa-puzzle-piece text-warning"></i></div>
+                    <h5>Model Diversity</h5>
+                    <p>Different algorithms capture different patterns. <strong>Soft Voting</strong> across IWRF, LightGBM, CatBoost, and EasyEnsemble reduces individual model weaknesses.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Comparison Table -->
+<section class="py-5 section-dark">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">
+                <i class="fas fa-table text-primary me-3"></i>Method Comparison
+            </h2>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card-dark">
+                    <div class="card-body p-4">
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover mb-0" style="background: transparent;">
+                                <thead>
+                                    <tr style="border-bottom: 2px solid var(--primary-color);">
+                                        <th>Technique</th>
+                                        <th>Category</th>
+                                        <th>Primary Benefit</th>
+                                        <th>Medical Impact</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>BorutaSHAP</strong></td>
+                                        <td><span class="algo-tag-sm">Feature Selection</span></td>
+                                        <td>Removes irrelevant features</td>
+                                        <td>Reduces false signals from noisy data</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>mRMR</strong></td>
+                                        <td><span class="algo-tag-sm">Feature Selection</span></td>
+                                        <td>Minimizes redundancy</td>
+                                        <td>Compact, interpretable feature set</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>IWRF</strong></td>
+                                        <td><span class="algo-tag-sm">Base Model</span></td>
+                                        <td>Adaptive sample weighting</td>
+                                        <td>Better on hard-to-classify patients</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>LightGBM</strong></td>
+                                        <td><span class="algo-tag-sm">Base Model</span></td>
+                                        <td>Fast, efficient boosting</td>
+                                        <td>Captures non-linear risk interactions</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>CatBoost</strong></td>
+                                        <td><span class="algo-tag-sm">Base Model</span></td>
+                                        <td>Handles categorical data natively</td>
+                                        <td>Robust to overfitting on small datasets</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>EasyEnsemble</strong></td>
+                                        <td><span class="algo-tag-sm">Base Model</span></td>
+                                        <td>Balanced ensemble learning</td>
+                                        <td>Effective on imbalanced patient populations</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Bayesian Opt.</strong></td>
+                                        <td><span class="algo-tag-sm">Optimization</span></td>
+                                        <td>Intelligent hyperparameter search</td>
+                                        <td>Maximizes F1 without overfitting</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Cost-Sensitive</strong></td>
+                                        <td><span class="algo-tag-sm">Training</span></td>
+                                        <td>Asymmetric misclassification costs</td>
+                                        <td>Prioritizes detecting disease (FN = 5× penalty)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Calibration</strong></td>
+                                        <td><span class="algo-tag-sm">Post-Processing</span></td>
+                                        <td>Well-calibrated probabilities</td>
+                                        <td>Trustworthy risk percentages for clinicians</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Threshold Opt.</strong></td>
+                                        <td><span class="algo-tag-sm">Post-Processing</span></td>
+                                        <td>Optimal decision boundary</td>
+                                        <td>Maximizes sensitivity for medical screening</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="py-5 section-darker">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="mb-4">
+                    <i class="fas fa-heartbeat text-primary" style="font-size: 4rem; animation: heartbeat 2s ease-in-out infinite;"></i>
+                </div>
+                <h2 class="display-6 fw-bold text-primary mb-4">
+                    Ready to Experience It?
+                </h2>
+                <p class="lead text-secondary mb-4">
+                    All 10 advanced techniques work together to give you the most accurate, trustworthy 
+                    cardiovascular risk assessment available.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="{{ url_for('predict') }}" class="btn btn-hero-primary btn-lg">
+                        <i class="fas fa-calculator me-2"></i>Start Assessment Now
+                    </a>
+                    <a href="{{ url_for('algorithms') }}" class="btn btn-hero-secondary btn-lg">
+                        <i class="fas fa-cogs me-2"></i>Explore Algorithms
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function createParticles() {
+    const c = document.getElementById('particles');
+    if (!c) return;
+    for (let i = 0; i < 25; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDelay = Math.random() * 15 + 's';
+        p.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        c.appendChild(p);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    createParticles();
+
+    // Animate cards on scroll
+    const cards = document.querySelectorAll('.usecase-card, .why-card');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('card-visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    cards.forEach(card => observer.observe(card));
+});
+</script>
+{% endblock %}

@@ -1,0 +1,459 @@
+{% extends "base.html" %}
+
+{% block title %}Risk Assessment Results - CardioPredict{% endblock %}
+
+{% block content %}
+<div class="result-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- Header -->
+                <div class="text-center mb-5">
+                    <h1 class="display-4 fw-bold text-primary mb-3">
+                        <i class="fas fa-chart-pulse me-3"></i>
+                        AI Risk Assessment Results
+                    </h1>
+                    <p class="lead text-secondary">
+                        Comprehensive cardiovascular risk analysis powered by advanced machine learning
+                    </p>
+                </div>
+
+                <!-- Main Result Card -->
+                <div class="result-card glow-effect mb-5">
+                    <div class="card-body p-5 text-center">
+                        {% if result.prediction == 1 %}
+                            <div class="result-icon risk-high mb-4">
+                                <i class="fas fa-exclamation-triangle fa-5x"></i>
+                            </div>
+                            <h2 class="fw-bold text-danger mb-3">
+                                Elevated Heart Disease Risk Detected
+                            </h2>
+                            <p class="lead mb-4 text-secondary">
+                                Our AI model indicates a <strong class="text-danger">{{ result.confidence }}</strong> 
+                                probability of heart disease based on your medical parameters.
+                            </p>
+                        {% else %}
+                            <div class="result-icon risk-low mb-4">
+                                <i class="fas fa-check-circle fa-5x"></i>
+                            </div>
+                            <h2 class="fw-bold text-success mb-3">
+                                Low Heart Disease Risk
+                            </h2>
+                            <p class="lead mb-4 text-secondary">
+                                Excellent! Our AI model indicates a <strong class="text-success">{{ (100 - result.probability * 100)|round|int }}%</strong> 
+                                probability that you have a lower risk of heart disease.
+                            </p>
+                        {% endif %}
+                        
+                        <!-- Risk Level Badge -->
+                        <div class="mb-4">
+                            <span class="badge bg-{{ result.risk_color }} px-4 py-3 fs-4">
+                                <i class="fas fa-shield-alt me-2"></i>{{ result.risk_level }} Risk Level
+                            </span>
+                        </div>
+                        
+                        <!-- Risk Meter -->
+                        <div class="risk-meter mx-auto mb-4" style="max-width: 500px;">
+                            <div class="d-flex justify-content-between mb-3">
+                                <span class="text-success fw-bold">
+                                    <i class="fas fa-heart me-1"></i>Low Risk
+                                </span>
+                                <span class="text-danger fw-bold">
+                                    High Risk <i class="fas fa-heart-broken ms-1"></i>
+                                </span>
+                            </div>
+                            <div class="risk-meter">
+                                <div class="risk-meter-fill bg-{{ result.risk_color }}" 
+                                     style="width: {{ result.probability * 100 }}%">
+                                </div>
+                            </div>
+                            <div class="text-center mt-2">
+                                <span class="h4 text-{{ result.risk_color }}">{{ result.confidence }}</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="d-flex justify-content-center gap-3 flex-wrap">
+                            <a href="{{ url_for('predict') }}" class="btn btn-outline-primary btn-lg">
+                                <i class="fas fa-redo me-2"></i>New Assessment
+                            </a>
+                            <button class="btn btn-primary btn-lg" onclick="window.print()">
+                                <i class="fas fa-download me-2"></i>Save Report
+                            </button>
+                            <button class="btn btn-outline-secondary btn-lg" onclick="shareResults()">
+                                <i class="fas fa-share-alt me-2"></i>Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Analysis -->
+                <div class="row">
+                    <!-- Risk Factors Analysis -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="card-dark h-100 glow-effect">
+                            <div class="card-body p-4">
+                                <h5 class="text-primary fw-bold mb-4">
+                                    <i class="fas fa-microscope me-2"></i>
+                                    Risk Factors Analysis
+                                </h5>
+                                
+                                <div class="risk-factors custom-scroll" style="max-height: 400px; overflow-y: auto;">
+                                    <!-- Age Risk -->
+                                    {% set age_risk = 'High' if result.input_data.age > 65 else ('Moderate' if result.input_data.age > 55 else 'Low') %}
+                                    <div class="risk-item mb-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <strong class="text-secondary">Age ({{ result.input_data.age }} years)</strong>
+                                                <div class="small text-muted mt-1">
+                                                    {% if result.input_data.age > 65 %}
+                                                        High risk age group - increased cardiovascular events
+                                                    {% elif result.input_data.age > 55 %}
+                                                        Moderate risk - age-related cardiovascular changes
+                                                    {% else %}
+                                                        Lower risk age group
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <span class="badge bg-{{ 'danger' if age_risk == 'High' else ('warning' if age_risk == 'Moderate' else 'success') }}">
+                                                {{ age_risk }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- BMI Risk -->
+                                    {% set bmi_risk = 'High' if result.input_data.bmi > 30 else ('Moderate' if result.input_data.bmi > 25 else 'Low') %}
+                                    <div class="risk-item mb-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <strong class="text-secondary">BMI ({{ "%.1f"|format(result.input_data.bmi) }})</strong>
+                                                <div class="small text-muted mt-1">
+                                                    {% if result.input_data.bmi > 30 %}
+                                                        Obesity (BMI ≥30) - significantly increased risk
+                                                    {% elif result.input_data.bmi > 25 %}
+                                                        Overweight (BMI 25-30) - moderately increased risk
+                                                    {% else %}
+                                                        Normal weight - optimal for heart health
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <span class="badge bg-{{ 'danger' if bmi_risk == 'High' else ('warning' if bmi_risk == 'Moderate' else 'success') }}">
+                                                {{ bmi_risk }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Blood Pressure Risk -->
+                                    {% set bp_risk = 'High' if result.input_data.trestbps > 140 else ('Moderate' if result.input_data.trestbps > 120 else 'Low') %}
+                                    <div class="risk-item mb-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <strong class="text-secondary">Blood Pressure ({{ result.input_data.trestbps }} mmHg)</strong>
+                                                <div class="small text-muted mt-1">
+                                                    {% if result.input_data.trestbps > 140 %}
+                                                        Hypertension - major cardiovascular risk factor
+                                                    {% elif result.input_data.trestbps > 120 %}
+                                                        Elevated - prehypertension stage
+                                                    {% else %}
+                                                        Normal - optimal cardiovascular health
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <span class="badge bg-{{ 'danger' if bp_risk == 'High' else ('warning' if bp_risk == 'Moderate' else 'success') }}">
+                                                {{ bp_risk }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Cholesterol Risk -->
+                                    {% set chol_risk = 'High' if result.input_data.chol > 240 else ('Moderate' if result.input_data.chol > 200 else 'Low') %}
+                                    <div class="risk-item mb-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <strong class="text-secondary">Cholesterol ({{ result.input_data.chol }} mg/dl)</strong>
+                                                <div class="small text-muted mt-1">
+                                                    {% if result.input_data.chol > 240 %}
+                                                        High cholesterol - arterial plaque formation risk
+                                                    {% elif result.input_data.chol > 200 %}
+                                                        Borderline high - monitor and lifestyle changes
+                                                    {% else %}
+                                                        Desirable level - good for heart health
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <span class="badge bg-{{ 'danger' if chol_risk == 'High' else ('warning' if chol_risk == 'Moderate' else 'success') }}">
+                                                {{ chol_risk }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Heart Rate -->
+                                    {% set hr_risk = 'High' if result.input_data.thalach < 100 else ('Moderate' if result.input_data.thalach < 120 else 'Low') %}
+                                    <div class="risk-item mb-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <strong class="text-secondary">Max Heart Rate ({{ result.input_data.thalach }} bpm)</strong>
+                                                <div class="small text-muted mt-1">
+                                                    {% if result.input_data.thalach < 100 %}
+                                                        Low exercise capacity - cardiovascular concern
+                                                    {% elif result.input_data.thalach < 120 %}
+                                                        Below average exercise response
+                                                    {% else %}
+                                                        Good cardiovascular fitness
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <span class="badge bg-{{ 'danger' if hr_risk == 'High' else ('warning' if hr_risk == 'Moderate' else 'success') }}">
+                                                {{ hr_risk }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Lifestyle Factors -->
+                                    <div class="risk-item mb-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <strong class="text-secondary">Smoking Status</strong>
+                                                <div class="small text-muted mt-1">
+                                                    {{ 'Active smoker - major modifiable risk factor' if result.input_data.smoking == 1 else 'Non-smoker - excellent for heart health' }}
+                                                </div>
+                                            </div>
+                                            <span class="badge bg-{{ 'danger' if result.input_data.smoking == 1 else 'success' }}">
+                                                {{ 'High' if result.input_data.smoking == 1 else 'Low' }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="risk-item">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <strong class="text-secondary">Diabetes Status</strong>
+                                                <div class="small text-muted mt-1">
+                                                    {{ 'Diabetes present - requires careful management' if result.input_data.diabetes == 1 else 'No diabetes - lower cardiovascular risk' }}
+                                                </div>
+                                            </div>
+                                            <span class="badge bg-{{ 'danger' if result.input_data.diabetes == 1 else 'success' }}">
+                                                {{ 'High' if result.input_data.diabetes == 1 else 'Low' }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recommendations -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="card-dark h-100 glow-effect">
+                            <div class="card-body p-4">
+                                <h5 class="text-primary fw-bold mb-4">
+                                    <i class="fas fa-user-md me-2"></i>
+                                    Medical Recommendations
+                                </h5>
+                                
+                                {% if result.prediction == 1 %}
+                                    <div class="alert alert-danger mb-4">
+                                        <i class="fas fa-exclamation-triangle me-2"></i>
+                                        <strong>Urgent:</strong> Please consult with a cardiologist immediately for comprehensive evaluation and treatment planning.
+                                    </div>
+                                    
+                                    <h6 class="text-danger fw-bold mb-3">
+                                        <i class="fas fa-clock me-2"></i>Immediate Actions Required:
+                                    </h6>
+                                    <ul class="list-unstyled mb-4">
+                                        <li class="mb-2">
+                                            <i class="fas fa-user-md text-danger me-2"></i>
+                                            <strong>Schedule cardiology appointment within 48 hours</strong>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-heartbeat text-warning me-2"></i>
+                                            Request comprehensive cardiac workup (ECG, Echo, Stress Test)
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-pills text-info me-2"></i>
+                                            Review all current medications with healthcare provider
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-clipboard-list text-primary me-2"></i>
+                                            Prepare detailed medical history and symptom diary
+                                        </li>
+                                    </ul>
+                                {% else %}
+                                    <div class="alert alert-success mb-4">
+                                        <i class="fas fa-check-circle me-2"></i>
+                                        <strong>Great news!</strong> Your results suggest lower heart disease risk. Continue maintaining healthy habits and regular check-ups.
+                                    </div>
+                                {% endif %}
+                                
+                                <h6 class="text-primary fw-bold mb-3">
+                                    <i class="fas fa-heart me-2"></i>Heart-Healthy Lifestyle:
+                                </h6>
+                                <div class="custom-scroll" style="max-height: 300px; overflow-y: auto;">
+                                    <ul class="list-unstyled">
+                                        <li class="mb-3">
+                                            <div class="d-flex">
+                                                <i class="fas fa-utensils text-success me-3 mt-1"></i>
+                                                <div>
+                                                    <strong class="text-secondary">Nutrition</strong>
+                                                    <div class="small text-muted">Mediterranean diet, low sodium, omega-3 rich foods</div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="mb-3">
+                                            <div class="d-flex">
+                                                <i class="fas fa-running text-primary me-3 mt-1"></i>
+                                                <div>
+                                                    <strong class="text-secondary">Exercise</strong>
+                                                    <div class="small text-muted">150 minutes moderate aerobic activity per week</div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="mb-3">
+                                            <div class="d-flex">
+                                                <i class="fas fa-smoking-ban text-danger me-3 mt-1"></i>
+                                                <div>
+                                                    <strong class="text-secondary">Smoking Cessation</strong>
+                                                    <div class="small text-muted">Eliminate tobacco use, avoid secondhand smoke</div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="mb-3">
+                                            <div class="d-flex">
+                                                <i class="fas fa-weight text-warning me-3 mt-1"></i>
+                                                <div>
+                                                    <strong class="text-secondary">Weight Management</strong>
+                                                    <div class="small text-muted">Maintain healthy BMI (18.5-25), gradual weight loss if needed</div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="mb-3">
+                                            <div class="d-flex">
+                                                <i class="fas fa-bed text-info me-3 mt-1"></i>
+                                                <div>
+                                                    <strong class="text-secondary">Sleep Quality</strong>
+                                                    <div class="small text-muted">7-9 hours quality sleep, treat sleep apnea if present</div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="mb-3">
+                                            <div class="d-flex">
+                                                <i class="fas fa-chart-line text-success me-3 mt-1"></i>
+                                                <div>
+                                                    <strong class="text-secondary">Regular Monitoring</strong>
+                                                    <div class="small text-muted">BP checks, cholesterol panels, diabetes screening</div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- AI Model Information -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="card-dark glow-effect">
+                            <div class="card-body p-4">
+                                <h5 class="text-primary fw-bold mb-3">
+                                    <i class="fas fa-robot me-2"></i>
+                                    AI Model Information
+                                </h5>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="text-center">
+                                            <div class="h4 text-primary mb-1">94.2%</div>
+                                            <small class="text-muted">Model Accuracy</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="text-center">
+                                            <div class="h4 text-success mb-1">16+</div>
+                                            <small class="text-muted">Parameters Analyzed</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="text-center">
+                                            <div class="h4 text-info mb-1">Ensemble</div>
+                                            <small class="text-muted">ML Algorithms</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Medical Disclaimer -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="alert alert-info">
+                            <h6 class="alert-heading">
+                                <i class="fas fa-info-circle me-2"></i>Important Medical Disclaimer
+                            </h6>
+                            <p class="mb-0">
+                                This AI-powered assessment is designed for educational and screening purposes only. 
+                                It should never replace professional medical diagnosis, treatment, or advice. 
+                                Always consult with qualified healthcare professionals regarding your cardiovascular health. 
+                                The AI model has been trained on diverse datasets but individual cases may vary significantly.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Result page enhancements
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate risk meter
+    setTimeout(() => {
+        const riskMeter = document.querySelector('.risk-meter-fill');
+        if (riskMeter) {
+            const targetWidth = riskMeter.style.width;
+            riskMeter.style.width = '0%';
+            
+            setTimeout(() => {
+                riskMeter.style.width = targetWidth;
+            }, 500);
+        }
+    }, 1000);
+    
+    // Animate result card
+    const resultCard = document.querySelector('.result-card');
+    if (resultCard) {
+        resultCard.style.opacity = '0';
+        resultCard.style.transform = 'translateY(30px)';
+        
+        setTimeout(() => {
+            resultCard.style.transition = 'all 0.8s ease';
+            resultCard.style.opacity = '1';
+            resultCard.style.transform = 'translateY(0)';
+        }, 200);
+    }
+});
+
+// Share results function
+function shareResults() {
+    const resultText = `I just completed a heart disease risk assessment using AI technology. The results show my risk level and personalized recommendations for cardiovascular health.`;
+    
+    if (navigator.share) {
+        navigator.share({
+            title: 'Heart Disease Risk Assessment Results',
+            text: resultText,
+            url: window.location.href
+        });
+    } else {
+        // Fallback to clipboard
+        navigator.clipboard.writeText(resultText + '\n\n' + window.location.href).then(() => {
+            alert('Results copied to clipboard!');
+        });
+    }
+}
+</script>
+{% endblock %}

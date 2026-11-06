@@ -1,0 +1,501 @@
+{% extends "base.html" %}
+
+{% block title %}Algorithms - CardioPredict AI{% endblock %}
+
+{% block content %}
+<!-- Particle Background -->
+<div class="particles" id="particles"></div>
+
+<!-- Hero Banner -->
+<section class="algo-hero-section">
+    <div class="container">
+        <div class="text-center">
+            <div class="algo-hero-icon">
+                <i class="fas fa-cogs"></i>
+            </div>
+            <h1 class="hero-title" style="font-size: 3.2rem;">
+                Advanced <span class="text-glow">ML Algorithms</span>
+            </h1>
+            <p class="hero-subtitle mx-auto">
+                Our prediction engine combines 10 state-of-the-art machine learning techniques 
+                to deliver clinical-grade cardiovascular risk assessments.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Algorithm Pipeline Overview -->
+<section class="py-5 section-dark">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">
+                <i class="fas fa-stream text-primary me-3"></i>Training Pipeline
+            </h2>
+            <p class="section-subtitle">
+                Each technique plays a critical role in the pipeline, from data preparation through final prediction.
+            </p>
+        </div>
+
+        <!-- Pipeline Flow Visual -->
+        <div class="pipeline-flow mb-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="pipeline-track">
+                        <div class="pipeline-step" data-step="1">
+                            <div class="pipeline-dot"></div>
+                            <span>Feature Selection</span>
+                        </div>
+                        <div class="pipeline-line"></div>
+                        <div class="pipeline-step" data-step="2">
+                            <div class="pipeline-dot"></div>
+                            <span>Base Models</span>
+                        </div>
+                        <div class="pipeline-line"></div>
+                        <div class="pipeline-step" data-step="3">
+                            <div class="pipeline-dot"></div>
+                            <span>Optimization</span>
+                        </div>
+                        <div class="pipeline-line"></div>
+                        <div class="pipeline-step" data-step="4">
+                            <div class="pipeline-dot"></div>
+                            <span>Ensemble</span>
+                        </div>
+                        <div class="pipeline-line"></div>
+                        <div class="pipeline-step" data-step="5">
+                            <div class="pipeline-dot"></div>
+                            <span>Calibration</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Algorithms Detail Cards -->
+<section class="py-5 section-darker">
+    <div class="container">
+
+        <!-- BorutaSHAP -->
+        <div class="algo-detail-card mb-5" id="boruta-shap">
+            <div class="row align-items-center">
+                <div class="col-lg-5">
+                    <div class="algo-visual">
+                        <div class="algo-icon-large" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">
+                            <i class="fas fa-filter"></i>
+                        </div>
+                        <div class="algo-badge">Feature Selection</div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <h3 class="algo-name">BorutaSHAP Feature Selection</h3>
+                    <p class="algo-desc">
+                        Combines the Boruta all-relevant feature selection algorithm with SHAP (SHapley Additive exPlanations) values 
+                        for robust, interpretable feature selection. Instead of relying on traditional importance metrics, it uses 
+                        game-theoretic SHAP values to measure each feature's true contribution to predictions.
+                    </p>
+                    <div class="algo-how-it-works">
+                        <h6><i class="fas fa-lightbulb text-warning me-2"></i>How It Works</h6>
+                        <ul>
+                            <li>Creates "shadow" copies of all features by random permutation</li>
+                            <li>Computes SHAP values for both real and shadow features using a LightGBM model</li>
+                            <li>Features consistently outperforming their shadow counterparts are confirmed as relevant</li>
+                            <li>Runs 20 statistical trials for high-confidence selection</li>
+                        </ul>
+                    </div>
+                    <div class="algo-tags">
+                        <span class="algo-tag">Explainable AI</span>
+                        <span class="algo-tag">Game Theory</span>
+                        <span class="algo-tag">Statistical Testing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- mRMR -->
+        <div class="algo-detail-card mb-5" id="mrmr">
+            <div class="row align-items-center flex-lg-row-reverse">
+                <div class="col-lg-5">
+                    <div class="algo-visual">
+                        <div class="algo-icon-large" style="background: linear-gradient(135deg, #2980b9, #3498db);">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <div class="algo-badge">Feature Selection</div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <h3 class="algo-name">mRMR — Minimum Redundancy Maximum Relevance</h3>
+                    <p class="algo-desc">
+                        A powerful information-theoretic feature selection method that balances two objectives: 
+                        maximizing the mutual information between each feature and the target variable (relevance), while 
+                        minimizing redundancy among the selected features themselves.
+                    </p>
+                    <div class="algo-how-it-works">
+                        <h6><i class="fas fa-lightbulb text-warning me-2"></i>How It Works</h6>
+                        <ul>
+                            <li>Computes mutual information between each feature and the target class</li>
+                            <li>Greedily selects features that add maximum new information</li>
+                            <li>Penalizes features that are highly correlated with already-selected ones</li>
+                            <li>Result: a compact, diverse, and highly predictive feature set</li>
+                        </ul>
+                    </div>
+                    <div class="algo-tags">
+                        <span class="algo-tag">Information Theory</span>
+                        <span class="algo-tag">Mutual Information</span>
+                        <span class="algo-tag">Greedy Optimization</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- IWRF -->
+        <div class="algo-detail-card mb-5" id="iwrf">
+            <div class="row align-items-center">
+                <div class="col-lg-5">
+                    <div class="algo-visual">
+                        <div class="algo-icon-large" style="background: linear-gradient(135deg, #27ae60, #2ecc71);">
+                            <i class="fas fa-tree"></i>
+                        </div>
+                        <div class="algo-badge">Base Model</div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <h3 class="algo-name">Improved Weighted Random Forest (IWRF)</h3>
+                    <p class="algo-desc">
+                        A custom enhancement of the standard Random Forest that incorporates dynamic sample weighting 
+                        and iterative refinement. Misclassified samples receive boosted weights in subsequent iterations, 
+                        creating a feedback loop that forces the forest to focus on hard-to-classify cases.
+                    </p>
+                    <div class="algo-how-it-works">
+                        <h6><i class="fas fa-lightbulb text-warning me-2"></i>How It Works</h6>
+                        <ul>
+                            <li>Initializes sample weights based on inverse class frequency (cost-sensitive)</li>
+                            <li>Trains a balanced-subsample Random Forest with current weights</li>
+                            <li>Identifies misclassified samples and boosts their weights by 50%</li>
+                            <li>Repeats for multiple iterations, progressively improving boundary decision</li>
+                        </ul>
+                    </div>
+                    <div class="algo-tags">
+                        <span class="algo-tag">Ensemble Learning</span>
+                        <span class="algo-tag">Adaptive Boosting</span>
+                        <span class="algo-tag">Class Imbalance</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LightGBM -->
+        <div class="algo-detail-card mb-5" id="lightgbm">
+            <div class="row align-items-center flex-lg-row-reverse">
+                <div class="col-lg-5">
+                    <div class="algo-visual">
+                        <div class="algo-icon-large" style="background: linear-gradient(135deg, #f39c12, #e67e22);">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="algo-badge">Base Model</div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <h3 class="algo-name">LightGBM — Light Gradient Boosting Machine</h3>
+                    <p class="algo-desc">
+                        A highly efficient gradient boosting framework developed by Microsoft that uses histogram-based 
+                        learning and leaf-wise tree growth for faster training and lower memory usage. It natively supports 
+                        imbalanced datasets through the <code>is_unbalance</code> parameter.
+                    </p>
+                    <div class="algo-how-it-works">
+                        <h6><i class="fas fa-lightbulb text-warning me-2"></i>How It Works</h6>
+                        <ul>
+                            <li>Uses Gradient-based One-Side Sampling (GOSS) to focus on poorly predicted samples</li>
+                            <li>Exclusive Feature Bundling (EFB) reduces feature space for speed</li>
+                            <li>Leaf-wise growth finds the split with maximum loss reduction</li>
+                            <li>L1/L2 regularization prevents overfitting on medical data</li>
+                        </ul>
+                    </div>
+                    <div class="algo-tags">
+                        <span class="algo-tag">Gradient Boosting</span>
+                        <span class="algo-tag">Histogram-based</span>
+                        <span class="algo-tag">Microsoft Research</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CatBoost -->
+        <div class="algo-detail-card mb-5" id="catboost">
+            <div class="row align-items-center">
+                <div class="col-lg-5">
+                    <div class="algo-visual">
+                        <div class="algo-icon-large" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
+                            <i class="fas fa-cat"></i>
+                        </div>
+                        <div class="algo-badge">Base Model</div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <h3 class="algo-name">CatBoost — Categorical Boosting</h3>
+                    <p class="algo-desc">
+                        Developed by Yandex, CatBoost implements ordered boosting to combat prediction shift (a form of target leakage 
+                        common in gradient boosting) and handles categorical features natively without manual encoding. 
+                        Its <code>auto_class_weights='Balanced'</code> mode applies cost-sensitive learning automatically.
+                    </p>
+                    <div class="algo-how-it-works">
+                        <h6><i class="fas fa-lightbulb text-warning me-2"></i>How It Works</h6>
+                        <ul>
+                            <li>Ordered Target Encoding for categorical features prevents data leakage</li>
+                            <li>Ordered Boosting uses permutation-based training to reduce overfitting</li>
+                            <li>Symmetric (balanced) decision trees for GPU-efficient inference</li>
+                            <li>Built-in class weighting adjusts the loss for minority classes</li>
+                        </ul>
+                    </div>
+                    <div class="algo-tags">
+                        <span class="algo-tag">Gradient Boosting</span>
+                        <span class="algo-tag">Ordered Boosting</span>
+                        <span class="algo-tag">Yandex Research</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EasyEnsemble -->
+        <div class="algo-detail-card mb-5" id="easy-ensemble">
+            <div class="row align-items-center flex-lg-row-reverse">
+                <div class="col-lg-5">
+                    <div class="algo-visual">
+                        <div class="algo-icon-large" style="background: linear-gradient(135deg, #1abc9c, #16a085);">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <div class="algo-badge">Base Model</div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <h3 class="algo-name">EasyEnsemble</h3>
+                    <p class="algo-desc">
+                        An ensemble strategy specifically designed for class-imbalanced learning. It creates multiple balanced 
+                        subsets by under-sampling the majority class and trains a separate AdaBoost classifier on each subset. 
+                        The final prediction aggregates all sub-classifiers through majority voting.
+                    </p>
+                    <div class="algo-how-it-works">
+                        <h6><i class="fas fa-lightbulb text-warning me-2"></i>How It Works</h6>
+                        <ul>
+                            <li>Randomly under-samples the majority class to create balanced subsets</li>
+                            <li>Trains 15 independent AdaBoost classifiers on these subsets</li>
+                            <li>Each sub-learner becomes expert on different regions of the data space</li>
+                            <li>Final prediction aggregates all sub-learners for robust, bias-corrected output</li>
+                        </ul>
+                    </div>
+                    <div class="algo-tags">
+                        <span class="algo-tag">Imbalanced Learning</span>
+                        <span class="algo-tag">Under-sampling</span>
+                        <span class="algo-tag">Meta-classifier</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bayesian Optimization -->
+        <div class="algo-detail-card mb-5" id="bayesian-opt">
+            <div class="row align-items-center">
+                <div class="col-lg-5">
+                    <div class="algo-visual">
+                        <div class="algo-icon-large" style="background: linear-gradient(135deg, #8e44ad, #9b59b6);">
+                            <i class="fas fa-magic"></i>
+                        </div>
+                        <div class="algo-badge">Optimization</div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <h3 class="algo-name">Bayesian Optimization</h3>
+                    <p class="algo-desc">
+                        A sequential model-based optimization strategy for hyperparameter tuning. Unlike grid search or random search, 
+                        Bayesian optimization builds a probabilistic surrogate model (Gaussian Process) of the objective function, then 
+                        uses an acquisition function to intelligently choose the next set of hyperparameters to evaluate.
+                    </p>
+                    <div class="algo-how-it-works">
+                        <h6><i class="fas fa-lightbulb text-warning me-2"></i>How It Works</h6>
+                        <ul>
+                            <li>Defines search spaces for each model's hyperparameters</li>
+                            <li>Builds a Gaussian Process surrogate model of the cross-validation F1 score</li>
+                            <li>Uses Expected Improvement (EI) acquisition to balance exploration vs exploitation</li>
+                            <li>Converges on optimal hyperparameters in 20-25 iterations per model</li>
+                        </ul>
+                    </div>
+                    <div class="algo-tags">
+                        <span class="algo-tag">Gaussian Processes</span>
+                        <span class="algo-tag">Acquisition Functions</span>
+                        <span class="algo-tag">Hyperparameter Tuning</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cost-Sensitive Learning -->
+        <div class="algo-detail-card mb-5" id="cost-sensitive">
+            <div class="row align-items-center flex-lg-row-reverse">
+                <div class="col-lg-5">
+                    <div class="algo-visual">
+                        <div class="algo-icon-large" style="background: linear-gradient(135deg, #e74c3c, #e55d4e);">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <div class="algo-badge">Training Strategy</div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <h3 class="algo-name">Cost-Sensitive Learning</h3>
+                    <p class="algo-desc">
+                        In medical diagnosis, missing a disease case (false negative) is far more costly than a false alarm 
+                        (false positive). Cost-sensitive learning assigns asymmetric misclassification costs: a false negative 
+                        costs 5× more than a false positive, forcing the model to prioritize high sensitivity.
+                    </p>
+                    <div class="algo-how-it-works">
+                        <h6><i class="fas fa-lightbulb text-warning me-2"></i>How It Works</h6>
+                        <ul>
+                            <li>Defines a cost matrix: FN = 5×, FP = 1× (asymmetric penalties)</li>
+                            <li>All base models use <code>class_weight='balanced'</code> or equivalent</li>
+                            <li>IWRF uses inverse-frequency sample weights amplifying minority class</li>
+                            <li>Evaluation includes total-cost metric alongside standard metrics</li>
+                        </ul>
+                    </div>
+                    <div class="algo-tags">
+                        <span class="algo-tag">Medical AI</span>
+                        <span class="algo-tag">Asymmetric Loss</span>
+                        <span class="algo-tag">Risk-Aware</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Probability Calibration -->
+        <div class="algo-detail-card mb-5" id="calibration">
+            <div class="row align-items-center">
+                <div class="col-lg-5">
+                    <div class="algo-visual">
+                        <div class="algo-icon-large" style="background: linear-gradient(135deg, #3498db, #2980b9);">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div class="algo-badge">Post-Processing</div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <h3 class="algo-name">Probability Calibration</h3>
+                    <p class="algo-desc">
+                        Raw model outputs from boosted ensembles are often poorly calibrated — a predicted probability of 80% 
+                        may not correspond to an 80% true positive rate. Isotonic regression calibration maps these raw scores 
+                        to well-calibrated probabilities that doctors can trust for clinical decision-making.
+                    </p>
+                    <div class="algo-how-it-works">
+                        <h6><i class="fas fa-lightbulb text-warning me-2"></i>How It Works</h6>
+                        <ul>
+                            <li>Holds out a calibration set (15% of data) from training</li>
+                            <li>Fits an isotonic regression model on (raw_probability → true_outcome) pairs</li>
+                            <li>Produces monotonic, non-parametric mapping from raw → calibrated probabilities</li>
+                            <li>Validated using Brier Score and reliability diagrams</li>
+                        </ul>
+                    </div>
+                    <div class="algo-tags">
+                        <span class="algo-tag">Isotonic Regression</span>
+                        <span class="algo-tag">Brier Score</span>
+                        <span class="algo-tag">Clinical Trust</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Threshold Optimization -->
+        <div class="algo-detail-card mb-5" id="threshold-opt">
+            <div class="row align-items-center flex-lg-row-reverse">
+                <div class="col-lg-5">
+                    <div class="algo-visual">
+                        <div class="algo-icon-large" style="background: linear-gradient(135deg, #f39c12, #d35400);">
+                            <i class="fas fa-sliders-h"></i>
+                        </div>
+                        <div class="algo-badge">Post-Processing</div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <h3 class="algo-name">Threshold Optimization</h3>
+                    <p class="algo-desc">
+                        Rather than using the default 0.5 decision threshold, we optimize it using Youden's J statistic 
+                        (Sensitivity + Specificity − 1). For medical screening, this approach maximizes the ability to correctly 
+                        identify both positive and negative cases, often lowering the threshold below 0.5 to favor sensitivity.
+                    </p>
+                    <div class="algo-how-it-works">
+                        <h6><i class="fas fa-lightbulb text-warning me-2"></i>How It Works</h6>
+                        <ul>
+                            <li>Generates ROC curve from calibrated probabilities on calibration set</li>
+                            <li>Computes Youden's J = TPR − FPR at every possible threshold</li>
+                            <li>Selects threshold that maximizes J (optimal operating point on ROC)</li>
+                            <li>Also evaluates best-F1 threshold as an alternative for comparison</li>
+                        </ul>
+                    </div>
+                    <div class="algo-tags">
+                        <span class="algo-tag">Youden's J</span>
+                        <span class="algo-tag">ROC Analysis</span>
+                        <span class="algo-tag">Medical Screening</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="py-5 section-dark">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h2 class="display-6 fw-bold text-primary mb-4">
+                    See These Algorithms in Action
+                </h2>
+                <p class="lead text-secondary mb-4">
+                    Experience the combined power of all 10 techniques working together to assess your cardiovascular risk.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="{{ url_for('predict') }}" class="btn btn-hero-primary btn-lg">
+                        <i class="fas fa-heartbeat me-2"></i>Try Risk Assessment
+                    </a>
+                    <a href="{{ url_for('architecture') }}" class="btn btn-hero-secondary btn-lg">
+                        <i class="fas fa-sitemap me-2"></i>View Architecture
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Particle system
+function createParticles() {
+    const particlesContainer = document.getElementById('particles');
+    if (!particlesContainer) return;
+    for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        particlesContainer.appendChild(particle);
+    }
+}
+
+// Animate algorithm cards on scroll
+function animateOnScroll() {
+    const cards = document.querySelectorAll('.algo-detail-card');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('algo-visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    cards.forEach(card => observer.observe(card));
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    createParticles();
+    animateOnScroll();
+});
+</script>
+{% endblock %}

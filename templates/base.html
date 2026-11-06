@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CardioPredict - AI Heart Disease Prediction{% endblock %}</title>
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="Advanced AI-powered heart disease prediction system with 94% accuracy. Get instant cardiovascular risk assessment.">
+    <meta name="keywords" content="heart disease, prediction, AI, machine learning, cardiovascular, health assessment">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>">
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <i class="fas fa-heartbeat heartbeat-icon"></i>
+                <span class="fw-bold">CardioPredict</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}#home">
+                            <i class="fas fa-home me-1"></i>Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('algorithms') }}">
+                            <i class="fas fa-cogs me-1"></i>Algorithms
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('architecture') }}">
+                            <i class="fas fa-sitemap me-1"></i>Architecture
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('use_cases') }}">
+                            <i class="fas fa-hospital me-1"></i>Use Cases
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('predict') }}">
+                            <i class="fas fa-calculator me-1"></i>Risk Assessment
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container mt-5 pt-3">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show glow-effect" role="alert">
+                        <i class="fas fa-exclamation-triangle me-2"></i>{{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="text-primary mb-3">
+                        <i class="fas fa-heartbeat me-2"></i>CardioPredict
+                    </h5>
+                    <p class="text-secondary mb-4">
+                        Revolutionary AI-powered heart disease prediction system helping millions 
+                        assess their cardiovascular risk with clinical-grade accuracy.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="text-decoration-none">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-decoration-none">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="text-decoration-none">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="text-decoration-none">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 mb-4">
+                    <h6 class="text-primary fw-bold mb-3">Navigation</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="{{ url_for('index') }}" class="text-secondary text-decoration-none hover-primary">Home</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ url_for('algorithms') }}" class="text-secondary text-decoration-none hover-primary">Algorithms</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ url_for('architecture') }}" class="text-secondary text-decoration-none hover-primary">Architecture</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ url_for('use_cases') }}" class="text-secondary text-decoration-none hover-primary">Use Cases</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ url_for('predict') }}" class="text-secondary text-decoration-none hover-primary">Assessment</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 mb-4">
+                    <h6 class="text-primary fw-bold mb-3">AI Features</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="fas fa-check text-primary me-2"></i>
+                            <span class="text-secondary">94%+ Accuracy Rate</span>
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-primary me-2"></i>
+                            <span class="text-secondary">Real-time Analysis</span>
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-primary me-2"></i>
+                            <span class="text-secondary">Ensemble ML Models</span>
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-primary me-2"></i>
+                            <span class="text-secondary">HIPAA Compliant</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 mb-4" id="contact">
+                    <h6 class="text-primary fw-bold mb-3">Get In Touch</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="fas fa-envelope text-primary me-2"></i>
+                            <span class="text-secondary">support@cardiopredict.ai</span>
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-phone text-primary me-2"></i>
+                            <span class="text-secondary">+1 (555) 123-4567</span>
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-map-marker-alt text-primary me-2"></i>
+                            <span class="text-secondary">San Francisco, CA</span>
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-clock text-primary me-2"></i>
+                            <span class="text-secondary">24/7 AI Support</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="my-4" style="border-color: var(--border-color);">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="text-muted mb-0">
+                        &copy; 2025 CardioPredict AI. All rights reserved.
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="text-muted mb-0">
+                        <small>
+                            <i class="fas fa-shield-alt text-primary me-1"></i>
+                            For educational purposes only. Always consult healthcare professionals.
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

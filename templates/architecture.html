@@ -1,0 +1,397 @@
+{% extends "base.html" %}
+
+{% block title %}System Architecture - CardioPredict AI{% endblock %}
+
+{% block content %}
+<!-- Particle Background -->
+<div class="particles" id="particles"></div>
+
+<!-- Hero Banner -->
+<section class="algo-hero-section">
+    <div class="container">
+        <div class="text-center">
+            <div class="algo-hero-icon">
+                <i class="fas fa-sitemap"></i>
+            </div>
+            <h1 class="hero-title" style="font-size: 3.2rem;">
+                System <span class="text-glow">Architecture</span>
+            </h1>
+            <p class="hero-subtitle mx-auto">
+                A deep dive into how CardioPredict's multi-layer architecture turns raw clinical data 
+                into calibrated, actionable risk predictions.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Architecture Diagram Section -->
+<section class="py-5 section-dark">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">
+                <i class="fas fa-project-diagram text-primary me-3"></i>End-to-End Pipeline
+            </h2>
+        </div>
+
+        <!-- Visual Architecture Diagram built with CSS -->
+        <div class="arch-diagram">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <!-- Layer 1: Input -->
+                    <div class="arch-layer" data-layer="1">
+                        <div class="arch-layer-label">DATA INGESTION</div>
+                        <div class="arch-layer-content">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <div class="arch-node">
+                                        <i class="fas fa-database"></i>
+                                        <h6>Clinical Dataset</h6>
+                                        <small>3,070 patient records × 16 features</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="arch-node">
+                                        <i class="fas fa-cogs"></i>
+                                        <h6>Feature Engineering</h6>
+                                        <small>27 features (age groups, BMI cats, interactions)</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="arch-node">
+                                        <i class="fas fa-random"></i>
+                                        <h6>Stratified Split</h6>
+                                        <small>70% train / 15% calibration / 15% test</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="arch-connector">
+                        <div class="arch-arrow"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+
+                    <!-- Layer 2: Feature Selection -->
+                    <div class="arch-layer" data-layer="2">
+                        <div class="arch-layer-label">FEATURE SELECTION</div>
+                        <div class="arch-layer-content">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="arch-node arch-node-purple">
+                                        <i class="fas fa-filter"></i>
+                                        <h6>BorutaSHAP</h6>
+                                        <small>SHAP-value based all-relevant selection (20 trials)</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="arch-node arch-node-blue">
+                                        <i class="fas fa-project-diagram"></i>
+                                        <h6>mRMR</h6>
+                                        <small>Max-relevance, min-redundancy filtering (12 features)</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="arch-merge-arrow text-center mt-3">
+                                <span class="badge bg-primary"><i class="fas fa-compress-arrows-alt me-1"></i>Union Merge → Robust Scaling</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="arch-connector">
+                        <div class="arch-arrow"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+
+                    <!-- Layer 3: Base Models -->
+                    <div class="arch-layer" data-layer="3">
+                        <div class="arch-layer-label">BASE MODELS + BAYESIAN OPTIMIZATION</div>
+                        <div class="arch-layer-content">
+                            <div class="row g-3">
+                                <div class="col-md-3">
+                                    <div class="arch-node arch-node-green">
+                                        <i class="fas fa-tree"></i>
+                                        <h6>IWRF</h6>
+                                        <small>Weighted Random Forest with iterative boosting</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="arch-node arch-node-orange">
+                                        <i class="fas fa-bolt"></i>
+                                        <h6>LightGBM</h6>
+                                        <small>Histogram-based gradient boosting</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="arch-node arch-node-red">
+                                        <i class="fas fa-cat"></i>
+                                        <h6>CatBoost</h6>
+                                        <small>Ordered boosting with balanced weights</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="arch-node arch-node-teal">
+                                        <i class="fas fa-layer-group"></i>
+                                        <h6>EasyEnsemble</h6>
+                                        <small>Balanced bagged AdaBoost ensemble</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center mt-3">
+                                <span class="badge bg-warning text-dark"><i class="fas fa-magic me-1"></i>All tuned via BayesSearchCV (5-fold stratified CV)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="arch-connector">
+                        <div class="arch-arrow"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+
+                    <!-- Layer 4: Ensemble & Post-Processing -->
+                    <div class="arch-layer" data-layer="4">
+                        <div class="arch-layer-label">ENSEMBLE & POST-PROCESSING</div>
+                        <div class="arch-layer-content">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <div class="arch-node arch-node-gold">
+                                        <i class="fas fa-vote-yea"></i>
+                                        <h6>Soft Voting</h6>
+                                        <small>F1-weighted probability averaging across 4 models</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="arch-node arch-node-blue">
+                                        <i class="fas fa-bullseye"></i>
+                                        <h6>Isotonic Calibration</h6>
+                                        <small>CalibratedClassifierCV on held-out calibration set</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="arch-node arch-node-orange">
+                                        <i class="fas fa-sliders-h"></i>
+                                        <h6>Threshold Optimization</h6>
+                                        <small>Youden's J statistic for optimal cutoff</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="arch-connector">
+                        <div class="arch-arrow"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+
+                    <!-- Layer 5: Output -->
+                    <div class="arch-layer" data-layer="5">
+                        <div class="arch-layer-label">PRODUCTION OUTPUT</div>
+                        <div class="arch-layer-content">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <div class="arch-node arch-node-success">
+                                        <i class="fas fa-heartbeat"></i>
+                                        <h6>Risk Prediction</h6>
+                                        <small>Low / Moderate / High with calibrated probability</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="arch-node arch-node-success">
+                                        <i class="fas fa-chart-pie"></i>
+                                        <h6>Confidence Score</h6>
+                                        <small>Calibrated probability + risk-level color coding</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="arch-node arch-node-success">
+                                        <i class="fas fa-notes-medical"></i>
+                                        <h6>Recommendations</h6>
+                                        <small>Personalized lifestyle and medical guidance</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Technical Details -->
+<section class="py-5 section-darker">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">
+                <i class="fas fa-server text-primary me-3"></i>Technical Stack
+            </h2>
+        </div>
+
+        <div class="row g-4">
+            <!-- Backend -->
+            <div class="col-lg-4">
+                <div class="card-dark h-100">
+                    <div class="card-body">
+                        <div class="feature-icon" style="background: linear-gradient(135deg, #3498db, #2980b9);">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h5 class="text-primary fw-bold text-center mb-3">Backend</h5>
+                        <ul class="tech-list">
+                            <li><span class="tech-name">Flask</span><span class="tech-desc">Web framework & API server</span></li>
+                            <li><span class="tech-name">scikit-learn</span><span class="tech-desc">ML pipeline & calibration</span></li>
+                            <li><span class="tech-name">LightGBM</span><span class="tech-desc">Gradient boosting engine</span></li>
+                            <li><span class="tech-name">CatBoost</span><span class="tech-desc">Ordered gradient boosting</span></li>
+                            <li><span class="tech-name">imbalanced-learn</span><span class="tech-desc">EasyEnsemble classifier</span></li>
+                            <li><span class="tech-name">SHAP</span><span class="tech-desc">Feature importance & explainability</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ML Pipeline -->
+            <div class="col-lg-4">
+                <div class="card-dark h-100">
+                    <div class="card-body">
+                        <div class="feature-icon" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h5 class="text-primary fw-bold text-center mb-3">ML Pipeline</h5>
+                        <ul class="tech-list">
+                            <li><span class="tech-name">scikit-optimize</span><span class="tech-desc">Bayesian hyperparameter tuning</span></li>
+                            <li><span class="tech-name">RobustScaler</span><span class="tech-desc">Outlier-robust normalization</span></li>
+                            <li><span class="tech-name">StratifiedKFold</span><span class="tech-desc">5-fold cross-validation</span></li>
+                            <li><span class="tech-name">CalibratedClassifierCV</span><span class="tech-desc">Probability calibration</span></li>
+                            <li><span class="tech-name">Joblib</span><span class="tech-desc">Model serialization (.pkl)</span></li>
+                            <li><span class="tech-name">Pandas</span><span class="tech-desc">Data processing & feature engineering</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Frontend -->
+            <div class="col-lg-4">
+                <div class="card-dark h-100">
+                    <div class="card-body">
+                        <div class="feature-icon" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <h5 class="text-primary fw-bold text-center mb-3">Frontend</h5>
+                        <ul class="tech-list">
+                            <li><span class="tech-name">Bootstrap 5</span><span class="tech-desc">Responsive UI framework</span></li>
+                            <li><span class="tech-name">Jinja2</span><span class="tech-desc">Server-side template rendering</span></li>
+                            <li><span class="tech-name">Font Awesome</span><span class="tech-desc">Icon system</span></li>
+                            <li><span class="tech-name">Inter Font</span><span class="tech-desc">Modern typography</span></li>
+                            <li><span class="tech-name">CSS Animations</span><span class="tech-desc">Micro-interactions & particles</span></li>
+                            <li><span class="tech-name">IntersectionObserver</span><span class="tech-desc">Scroll-triggered animations</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Saved Model Artifacts -->
+<section class="py-5 section-dark">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">
+                <i class="fas fa-box-open text-primary me-3"></i>Model Artifacts
+            </h2>
+            <p class="section-subtitle">
+                The training pipeline exports these serialized artifacts, loaded at server startup for real-time inference.
+            </p>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-8">
+                <div class="card-dark">
+                    <div class="card-body p-4">
+                        <table class="table table-dark table-hover mb-0" style="background: transparent;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--primary-color);">
+                                    <th><i class="fas fa-file-code text-primary me-2"></i>File</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>optimized_heart_disease_model.pkl</code></td>
+                                    <td>Calibrated soft-voting ensemble (IWRF + LightGBM + CatBoost + EasyEnsemble)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>robust_scaler.pkl</code></td>
+                                    <td>RobustScaler fitted on selected features (IQR-based normalization)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>feature_selector.pkl</code></td>
+                                    <td>BorutaSHAP + mRMR combined feature list and index mapping</td>
+                                </tr>
+                                <tr>
+                                    <td><code>optimal_threshold.pkl</code></td>
+                                    <td>Youden's J optimized decision threshold (float)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>training_results.json</code></td>
+                                    <td>Full metrics summary: accuracy, F1, ROC-AUC, PR-AUC, Brier score, etc.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="py-5 section-darker">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h2 class="display-6 fw-bold text-primary mb-4">
+                    Explore the Details
+                </h2>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="{{ url_for('algorithms') }}" class="btn btn-hero-primary btn-lg">
+                        <i class="fas fa-cogs me-2"></i>View Algorithms
+                    </a>
+                    <a href="{{ url_for('use_cases') }}" class="btn btn-hero-secondary btn-lg">
+                        <i class="fas fa-hospital me-2"></i>Use Cases
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function createParticles() {
+    const c = document.getElementById('particles');
+    if (!c) return;
+    for (let i = 0; i < 25; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDelay = Math.random() * 15 + 's';
+        p.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        c.appendChild(p);
+    }
+}
+
+function animateLayers() {
+    const layers = document.querySelectorAll('.arch-layer');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('arch-layer-visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    layers.forEach(l => observer.observe(l));
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    createParticles();
+    animateLayers();
+});
+</script>
+{% endblock %}
